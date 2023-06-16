@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import phoneService from '../services/phone.services'
 import Modal from './Modal'
+import Spinner from './Spinner'
 
 
 
 const PhonesAllPage = () => {
 
-    const [phones, setPhones] = useState([])
+    const [phones, setPhones] = useState()
 
     useEffect(() => {
         phoneService
@@ -21,7 +22,6 @@ const PhonesAllPage = () => {
         <div className='mx-auto max-w-6xl px-4 md:px-8 py-4'>
             <div className="overflow-x-auto">
                 <table className="table">
-                    {/* head */}
                     <thead>
                         <tr className='text-center'>
                             <th></th>
@@ -30,20 +30,33 @@ const PhonesAllPage = () => {
                             <th className='font-bold uppercase'>Details</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {phones.map(phone =>
-                        (
-                            <tr key={phone.id} className='hover'>
-                                <th className='px-0 text-center'>{phone.id + 1}</th>
-                                <td className='min-w-[120px] text-center px-0'>{phone.name}</td>
-                                <td className='hidden max-w-md sm:table-cell'>{phone.description}</td>
-                                <td className='text-center'><Modal phoneId={phone.id} /></td>
-                            </tr>)
-                        )
+                    {
+                        phones
+                            ?
+                            <tbody>
+                                {phones.map(phone =>
+                                (
+                                    <tr key={phone.id} className='hover'>
+                                        <th className='px-0 text-center'>{phone.id + 1}</th>
+                                        <td className='min-w-[120px] text-center px-0'>{phone.name}</td>
+                                        <td className='hidden max-w-md sm:table-cell'>{phone.description}</td>
+                                        <td className='text-center'><Modal phoneId={phone.id} /></td>
+                                    </tr>)
+                                )
 
-                        }
+                                }
 
-                    </tbody>
+                            </tbody>
+                            :
+                            <tbody>
+                                <tr>
+                                    <td colSpan={4} className='text-center'>
+                                        <Spinner></Spinner>
+                                    </td>
+                                </tr>
+                            </tbody>
+                    }
+
                 </table>
             </div>
         </div>

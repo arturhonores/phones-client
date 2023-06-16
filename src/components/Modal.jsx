@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import phoneService from "../services/phone.services";
 import IconDetails from "../components/IconDetails"
+import Spinner from '../components/Spinner'
 
 const Modal = ({ phoneId }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -53,7 +54,7 @@ const Modal = ({ phoneId }) => {
                                 </div>
                             </div>
                             :
-                            "loading"
+                            <Spinner />
                         }
                         <div className="modal-action">
                             <button className="btn" onClick={toggleModal}>Close</button>
